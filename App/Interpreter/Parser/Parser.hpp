@@ -30,7 +30,7 @@ private:
     OptToken getNextToken( Tokens& ) const;
 
 private:
-    char tokenSep = ' ';
+    char _tokenSep = ' ';
 };
 
 #endif // REGEX_PARSER_HPP

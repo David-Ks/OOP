@@ -1,15 +1,16 @@
 #include "Application.hpp"
 
 Application::Application()
-    : io( std::cin, std::cout )
-    // , interpreter( doc, io )
-{
-
-}
+    : _io( std::cin, std::cout )
+    , _interpreter( this, &_document, &_io )
+{}
 
 void Application::run()
 {
-    const auto line = io.getLine();
-    auto cmd = interpreter.interpret( line );
-    cmd->exec();
+    while ( true )
+    {
+        const auto line = _io.getLine();
+        auto cmd = _interpreter.interpret( line );
+        cmd->exec();
+    }
 }

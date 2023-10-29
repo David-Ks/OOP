@@ -6,8 +6,10 @@
 class ExitCommand : public Command
 {
 public:
+    ExitCommand( const CommandParams& params ) : Command( params ) {}
+
+public:
     void exec() override;
-    void addParam( const std::string& name, const std::string& value ) override;
 };
 
 #endif // EXIT_COMMAND_HPP

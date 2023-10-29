@@ -1,14 +1,20 @@
 #include "AddCommand.hpp"
 
-AddCommand::AddCommand( )
-{
-}
+#include "../../Document/Document.hpp"
+#include "../../Document/Shape/Factory/SimpleShapeFactory.hpp"
+
+#include <memory>
 
 void AddCommand::exec()
 {
-}
-
-void AddCommand::addParam( const std::string& name, const std::string& value )
-{
-    params[ name ] = value;
+    if ( _params.at( "-type" ) == "Slide" )
+    {
+        _document->addSlide( std::make_shared< Slide >() );
+    }
+    else if ( _params.at( "-type" ) == "Shape" )
+    {
+        auto shape = SimpleShapeFactory::create( _params );
+        auto slide = _document->getSlide( std::stoi( _params.at( "-SlideId" ) ) );
+        slide->addShape( std::move( shape ) );
+    }
 }

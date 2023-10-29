@@ -6,8 +6,10 @@
 class SaveCommand : public Command
 {
 public:
+    SaveCommand( const CommandParams& params ) : Command( params ) {}
+
+public:
     void exec() override;
-    void addParam( const std::string& name, const std::string& value ) override;
 };
 
 #endif // SAVE_COMMAND_HPP

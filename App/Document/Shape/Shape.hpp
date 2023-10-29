@@ -7,25 +7,27 @@
 class Shape
 {
 public:
-    Shape() : id( ++idCounter ) {}
+    Shape() {}
     virtual ~Shape() {}
 
 public:
-    virtual void setLineColor( const std::string& ) = 0;
-    virtual void setLineWidth( const std::string& ) = 0;
-    virtual void setFillColor( const std::string& ) = 0;
-    virtual void setStyle( const std::string& ) = 0;
     virtual std::string getProto() const = 0;
 
 public:
-    int getId() const { return id; }
+    void setLineStyle( const std::string& style )
+    {
+        _lineStyle = style;
+    }
+
+    std::string getLineStyle() const
+    {
+        return _lineStyle;
+    }    
 
 private:
-    static int idCounter;
-    int id;
+    std::string _lineStyle;
 };
 
-int Shape::idCounter = 0;
 
 using Shapes = std::vector< Shape* >;
 

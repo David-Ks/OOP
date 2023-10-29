@@ -1,39 +1,41 @@
 #include "SimpleCommandFactory.hpp"
 
-Command* SimpleCommandFactory::create( const CommandParams& params )
+std::unique_ptr< Command > SimpleCommandFactory::create( const CommandParams& params, Application* app, IOManager* io, Document* document )
 {
     const auto name = params.at( "name" );
     
-    if ( name == "add" )
+    if ( name == Command::toString( Command::Type::ADD ) )
     {
-        return new AddCommand( );
+        return std::make_unique< AddCommand >( params, document );
     }
-    else if ( name == "remove" )
+    else if ( name == Command::toString( Command::Type::REMOVE )  )
     {
-        // do
+        // TODO
     }
-    else if ( name == "display" )
+    else if ( name == Command::toString( Command::Type::DISPLAY ) )
     {
-        // do
+        // TODO
     }
-    else if ( name == "change" )
+    else if ( name == Command::toString( Command::Type::CHANGE ) )
     {
-        // do
+        // TODO
     }
-    else if ( name == "list" )
+    else if ( name == Command::toString( Command::Type::LIST ) )
     {
-        // do
+        // TODO
     }
-    else if ( name == "exit" )
+    else if ( name == Command::toString( Command::Type::EXIT ) )
     {
-        // do
+        // TODO
     }
-    else if ( name == "save" )
+    else if ( name == Command::toString( Command::Type::SAVE ) )
     {
-        // do
+        // TODO
     }
-    else if ( name == "load" )
+    else if ( name == Command::toString( Command::Type::LOAD ) )
     {
-        // do
+        // TODO
     }
+
+    return std::make_unique< NullCommand >();
 }

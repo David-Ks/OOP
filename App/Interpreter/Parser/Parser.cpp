@@ -5,7 +5,7 @@ auto Parser::tokenize( const std::string& line ) -> Tokens
     std::istringstream iss(line);
     Tokens tokens;
 
-    for ( Token token; std::getline(iss, token, tokenSep); )
+    for ( Token token; std::getline(iss, token, _tokenSep); )
     {
         tokens.push_back(token);
     }
@@ -28,7 +28,7 @@ auto Parser::parse( Tokens tokens ) const -> CommandParams
         throw std::runtime_error( "Invalid Command." );
     }
 
-    for ( ; token.has_value(); token = getNextToken( tokens ) )
+    for ( token = getNextToken( tokens ) ; token.has_value(); token = getNextToken( tokens ) )
     {
         if ( isParam( token.value() ) )
         {
@@ -49,6 +49,8 @@ auto Parser::parse( Tokens tokens ) const -> CommandParams
             throw std::runtime_error( "Invalid param." );
         }
     }
+
+    return params;
 }
 
 auto Parser::getNextToken( Tokens& tokens ) const -> OptToken
@@ -59,17 +61,18 @@ auto Parser::getNextToken( Tokens& tokens ) const -> OptToken
         tokens.pop_front();
         return nextToken; 
     }
+
     return {};
 }
 
 char Parser::getSeparator() const
 {
-    return tokenSep;
+    return _tokenSep;
 }
 
 void Parser::setSeparator( char sep )
 {
-    tokenSep = sep;
+    _tokenSep = sep;
 }
 
 bool Parser::isCommand( const std::string& str ) const

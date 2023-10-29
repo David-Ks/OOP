@@ -14,9 +14,9 @@ public:
     void run();
 
 private:
-    IOManager io;
-    Document doc;
-    Interpreter interpreter;
+    IOManager _io;
+    Document _document;
+    Interpreter _interpreter;
 };
 
 #endif // APPLICATION_HPP

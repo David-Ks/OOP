@@ -6,8 +6,10 @@
 class ChangeCommand : public Command
 {
 public:
+    ChangeCommand( const CommandParams& params ) : Command( params ) {}
+
+public:
     void exec() override;
-    void addParam( const std::string& name, const std::string& value ) override;
 };
 
 #endif // CHANGE_COMMAND_HPP

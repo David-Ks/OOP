@@ -1,8 +1,8 @@
 #include "IOManager.hpp"
 
 IOManager::IOManager( std::istream& is, std::ostream& os )
-    : is( is )
-    , os( os )
+    : _is( is )
+    , _os( os )
 {
 
 }
@@ -10,11 +10,11 @@ IOManager::IOManager( std::istream& is, std::ostream& os )
 auto IOManager::getLine() const -> String
 {
     String line;
-    is >> line;
+    std::getline( _is, line );
     return line;
 }
     
 void IOManager::writeLine( const String& str )
 {
-    os << str;
+    _os << str;
 }

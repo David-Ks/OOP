@@ -1,30 +1,18 @@
 #include "SimpleShapeFactory.hpp"
 
-Shape* SimpleShapeFactory::create( const Attributes& params )
+std::unique_ptr< Shape > SimpleShapeFactory::create( const Attributes& params )
 {
     auto shapeName = params.at( "-name" );
-    Shape* shape;
+    std::unique_ptr< Shape > shape;
 
     if ( shapeName == "Rect" )
     {
-        shape = new Rectangle;   
+        shape = std::make_unique< Rectangle >();   
     }
 
-    if ( params.find("-LColor") != params.end() )
-    {
-        shape->setLineColor( params.at( "-LColor" ) );
-    }
-    if ( params.find("-LWidth") != params.end() )
-    {
-        shape->setLineWidth( params.at( "-LWidth" ) );
-    }
-    if ( params.find("-FColor") != params.end() )
-    {
-        shape->setFillColor( params.at( "-FColor" ) );
-    }
     if ( params.find("-LStyle") != params.end() )
     {
-        shape->setStyle( params.at( "-LStyle" ) );
+        shape->setLineStyle( params.at( "-LStyle" ) );
     }
 
     return shape;

@@ -17,8 +17,8 @@ public:
     // void draw( Shape )
 
 private:
-    std::istream& is;
-    std::ostream& os;
+    std::istream& _is;
+    std::ostream& _os;
 };
 
 #endif // IO_MANAGER_HPP
