@@ -1,35 +1,30 @@
-#include <vector>
-#include <memory>
-#include <stdexcept>
-
 #include "Document.hpp"
-
-std::shared_ptr< Slide > Document::getSlide( int index ) const
-{
-    if ( index < 0 || index >= _slides.size() )
-    {
-        throw std::runtime_error( "Failed to get a Slide." );
-    }
-
-    return _slides[ index ];
-}
 
 void Document::addSlide( std::shared_ptr< Slide > slide )
 {
     _slides.push_back( slide );
 }
 
-void Document::delSlide( int index )
-{
-    if ( index < 0 || index >= _slides.size() )
-    {
-        throw std::runtime_error( "Failed to delete a Slide." );
-    }
-
-    _slides.erase( _slides.begin() + index );
-}
-
 auto Document::getSlides() const -> const Slides&
 {
     return _slides;
+}
+
+std::shared_ptr< Slide > Document::getSlideById( int id ) const
+{
+    for ( const auto& slide : _slides )
+    {
+        if ( slide->getId() == id )
+        {
+            return slide;
+        }
+    }
+
+    throw InvalidSlideIdException( "Invalid slide ID." );
+}
+
+void Document::delSlide( std::shared_ptr< Slide > slide )
+{
+    auto removeCondition = [ slide ]( std::shared_ptr< Slide > elem ) { return slide == elem; };
+    _slides.erase( std::remove_if( _slides.begin(), _slides.end(), removeCondition ), _slides.end() );
 }

@@ -1,35 +1,39 @@
-#include <vector>
-#include <memory>
-#include <stdexcept>
-
 #include "Slide.hpp"
 
-std::shared_ptr< Shape > Slide::getShape( int index ) const
+Slide::Slide() : _id( IdCounter++ ) {}
+
+void Slide::addItem( std::shared_ptr< Item > item )
 {
-    if ( index < 0 || index >= _shapes.size() )
+    _items.push_back( item );
+}
+
+auto Slide::getItems() const -> const Items&
+{
+    return _items;
+}
+
+void Slide::delItem( std::shared_ptr< Item > item )
+{
+    auto removeCondition = [ item ]( std::shared_ptr< Item > elem ) { return item == elem; };
+    _items.erase( std::remove_if( _items.begin(), _items.end(), removeCondition ), _items.end() );
+}
+
+int Slide::getId() const
+{
+    return _id;
+}
+
+std::shared_ptr< Item > Slide::getItemById( int id ) const
+{
+    for ( const auto& item : _items )
     {
-        throw std::runtime_error( "Failed to get a Shape." );
+        if ( item->getId() == id )
+        {
+            return item;
+        }
     }
 
-    return _shapes[ index ];
+    throw InvalidItemIdException( "Invalid slide ID." );
 }
 
-void Slide::addShape( std::shared_ptr< Shape > shape )
-{
-    _shapes.push_back( std::move( shape ) );
-}
-
-void Slide::delShape( int index )
-{
-    if ( index < 0 || index >= _shapes.size() )
-    {
-        throw std::runtime_error( "Failed to delete a Shape." );
-    }
-
-    _shapes.erase( _shapes.begin() + index );
-}
-
-auto Slide::getShapes() const -> const Shapes&
-{
-    return _shapes;
-}
+int Slide::IdCounter = 1;

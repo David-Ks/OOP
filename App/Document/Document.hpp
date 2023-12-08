@@ -2,26 +2,26 @@
 #define DOCUMENT_HPP
 
 #include "Slide.hpp"
+#include "../Common/Exception/Exception.hpp"
 
+#include <vector>
 #include <memory>
 
 class Document
 {
+public:
     using Slides = std::vector< std::shared_ptr< Slide > >;
 
-public:
-    Document()
-        : _current( -1 ) {}
+    struct InvalidSlideIdException : Common::Exception { using Exception::Exception; };
 
 public:
-    std::shared_ptr< Slide > getSlide( int ) const;
     void addSlide( std::shared_ptr< Slide > );
+    void delSlide( std::shared_ptr< Slide > );
+    std::shared_ptr< Slide > getSlideById( int ) const;
     const Slides& getSlides() const;
-    void delSlide( int );
 
 private:
     Slides _slides;
-    int _current;
 };
 
 #endif // DOCUMENT_HPP

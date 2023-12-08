@@ -1,22 +1,35 @@
 #ifndef SLIDE_HPP
 #define SLIDE_HPP
 
-#include "Shape/Shape.hpp"
+#include "Item.hpp"
+#include "../Common/Exception/Exception.hpp"
 
+#include <vector>
 #include <memory>
+#include <algorithm>
 
 class Slide
 {
-    using Shapes = std::vector< std::shared_ptr< Shape > >;
+    static int IdCounter;
 
 public:
-    std::shared_ptr< Shape > getShape( int ) const;
-    void addShape( std::shared_ptr< Shape > );
-    const Shapes& getShapes() const;
-    void delShape( int );
+    using Items = std::vector< std::shared_ptr< Item > >;
+
+    struct InvalidItemIdException : Common::Exception { using Exception::Exception; };
+
+public:
+    Slide();
+
+public:
+    void addItem( std::shared_ptr< Item > );
+    void delItem( std::shared_ptr< Item > );
+    std::shared_ptr< Item > getItemById( int ) const;
+    const Items& getItems() const;
+    int getId() const;
 
 private:
-    Shapes _shapes;
+    Items _items;
+    const int _id;
 };
 
 #endif // SLIDE_HPP
