@@ -1,48 +1,60 @@
 #include "Application.hpp"
 #include "Document/Document.hpp"
 #include "Director/Director.hpp"
+#include "Rendering/Render.hpp"
 
-std::shared_ptr< Common::ControllerBase > Application::_controller;
-std::shared_ptr< Document > Application::_document;
-std::shared_ptr< Director > Application::_director;
 
 Application::~Application() {}
 
 std::shared_ptr< Common::ControllerBase > Application::getController( Common::ControllerType type )
 {
-    if ( ! _controller )
+    static std::shared_ptr< Common::ControllerBase > controller;
+    if ( ! controller )
     {
         switch ( type )
         {
         case Common::ControllerType::CLI:
-            _controller = std::make_shared< CLI::Controller >();
+            controller = std::make_shared< CLI::Controller >();
             break;
         
         case Common::ControllerType::GUI:
-            _controller = std::make_shared< GUI::Controller >();
+            controller = std::make_shared< GUI::Controller >();
             break;
         }
     }
 
-    return _controller;
+    return controller;
 }
 
 std::shared_ptr< Document > Application::getDocument()
 {
-    if ( ! _document )
+    static std::shared_ptr< Document > document;
+    if ( ! document )
     {
-        _document = std::make_shared< Document >();
+        document = std::make_shared< Document >();
     }
 
-    return _document;
+    return document;
 }
 
 std::shared_ptr< Director > Application::getDirector()
 {
-    if ( ! _director )
+    static std::shared_ptr< Director > director;
+    if ( ! director )
     {
-        _director = std::make_shared< Director >();
+        director = std::make_shared< Director >();
     }
 
-    return _director;
+    return director;
+}
+
+std::shared_ptr< Render > Application::getRenderer()
+{
+    static std::shared_ptr< Render > renderer;
+    if ( ! renderer )
+    {
+        renderer = std::make_shared< Render >();
+    }
+    
+    return renderer;
 }

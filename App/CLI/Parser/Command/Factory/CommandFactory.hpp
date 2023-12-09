@@ -6,7 +6,9 @@
 #include "../UndoCommand.hpp"
 #include "../RedoCommand.hpp"
 #include "../ExitCommand.hpp"
+#include "../ListCommand.hpp"
 #include "../NoneCommand.hpp"
+#include "../DisplayCommand.hpp"
 
 #include <memory>
 

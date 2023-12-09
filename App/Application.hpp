@@ -8,6 +8,7 @@
 
 class Document;
 class Director;
+class Render;
 
 class Application
 {
@@ -22,17 +23,13 @@ public:
     static std::shared_ptr< Common::ControllerBase > getController( Common::ControllerType type = Common::ControllerType::CLI );
     static std::shared_ptr< Director > getDirector();
     static std::shared_ptr< Document > getDocument();
+    static std::shared_ptr< Render > getRenderer();
 
 private:
     Application() {}
     ~Application(); 
     Application( const Application& );
     Application& operator=( const Application& );
-
-private:
-    static std::shared_ptr< Common::ControllerBase > _controller;
-    static std::shared_ptr< Document > _document;
-    static std::shared_ptr< Director > _director;
 };
 
 #endif // APPLICATION_HPP

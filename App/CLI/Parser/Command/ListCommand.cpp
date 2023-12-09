@@ -1,4 +1,5 @@
 #include "ListCommand.hpp"
+#include "../../../Document/Document.hpp"
 
 namespace CLI
 {
@@ -8,10 +9,11 @@ ListCommand::ListCommand( const Arguments& args )
 
 void ListCommand::exec()
 {
-    auto id = std::get_if< std::string >( &_args.at( "-id" ) );
-    if ( ! id )
+    std::cout << "Slides:" << std::endl;
+
+    for ( const auto& slide : Application::getDocument()->getSlides() )
     {
-        throw InvalidArgumentException( "The -type argument is undefined." );
+        std::cout << slide->getId() << std::endl;
     }
 }
 

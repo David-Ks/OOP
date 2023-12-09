@@ -20,7 +20,8 @@ public:
     void run() override;
 
 private:
-    std::string getInput();
+    std::string input() const;
+    void output( const std::string& text ) const;
 
 private:
     bool _isExit;

@@ -21,6 +21,14 @@ std::unique_ptr< Command > CommandFactory::create( const std::string& name, cons
     {
         return std::make_unique< ExitCommand >( args );
     }
+    else if ( name == "list" )
+    {
+        return std::make_unique< ListCommand >( args );
+    }
+    else if ( name == "display" )
+    {
+        return std::make_unique< DisplayCommand >( args );
+    }
 
     return std::make_unique< NoneCommand >( args );
 }

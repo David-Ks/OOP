@@ -14,7 +14,7 @@ void Controller::run()
     {
         try
         {
-            auto cmd = cmdParser.parse( getInput() );
+            auto cmd = cmdParser.parse( input() );
             cmd->exec();
         }
         catch( const Common::Exception& exc )
@@ -24,11 +24,16 @@ void Controller::run()
     }
 }
 
-std::string Controller::getInput()
+std::string Controller::input() const
 {
     std::string line;
     std::getline( std::cin, line );
     return line;
+}
+
+void Controller::output( const std::string& text ) const
+{
+    std::cout << text << std::endl;
 }
 
 void Controller::exit()

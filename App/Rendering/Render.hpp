@@ -2,16 +2,15 @@
 #define RENDER_HPP
 
 #include "../Document/Slide.hpp"
+#include "Shapes/ShapeLib/ShapeLib.hpp"
 
-namespace Common
-{
+#include <ostream>
 
 class Render
 {
 public:
     void draw( std::shared_ptr< Slide > );
+    void print( std::shared_ptr< Slide >, std::ostream& stream );
 };
-
-} // namespace Common
 
 #endif // RENDER_HPP

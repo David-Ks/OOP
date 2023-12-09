@@ -5,8 +5,6 @@
 
 class Item
 {
-    static int IdCounter;
-
 public:
     using Position = std::pair< int, int >;
 public:
@@ -25,6 +23,8 @@ public:
     int getId() const;
     
 private:
+    static int IdCounter;
+
     std::string _shape;
     std::string _color;
     Position _position;

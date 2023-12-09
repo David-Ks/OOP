@@ -10,8 +10,6 @@
 
 class Slide
 {
-    static int IdCounter;
-
 public:
     using Items = std::vector< std::shared_ptr< Item > >;
 
@@ -28,6 +26,8 @@ public:
     int getId() const;
 
 private:
+    static int IdCounter;
+
     Items _items;
     const int _id;
 };
