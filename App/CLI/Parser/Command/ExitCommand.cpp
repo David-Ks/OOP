@@ -1,4 +1,5 @@
 #include "ExitCommand.hpp"
+#include "../../Controller.hpp"
 
 namespace CLI
 {

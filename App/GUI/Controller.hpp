@@ -11,6 +11,8 @@ class Controller : public Common::ControllerBase
 public:
     void run() override;
     void exit() override;
+    std::istream& input() override;
+    std::ostream& output() override;
 };
 
 } // namespace GUI

@@ -13,4 +13,14 @@ void Controller::exit()
     // pass
 }
 
+std::istream& Controller::input()
+{
+    // pass
+}
+
+std::ostream& Controller::output()
+{
+    // pass
+}
+
 } // namespace GUI

@@ -28,3 +28,14 @@ void Document::delSlide( std::shared_ptr< Slide > slide )
     auto removeCondition = [ slide ]( std::shared_ptr< Slide > elem ) { return slide == elem; };
     _slides.erase( std::remove_if( _slides.begin(), _slides.end(), removeCondition ), _slides.end() );
 }
+
+int Document::getIdBySlide( std::shared_ptr< Slide > slide ) const
+{
+    auto it = std::find( _slides.begin(), _slides.end(), slide );
+    if ( it == _slides.end() )
+    {
+        throw InvalidSlideException( "Invalid slide." );
+    }
+
+    return it->get()->getId();
+}

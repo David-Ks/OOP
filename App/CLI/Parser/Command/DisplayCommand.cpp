@@ -1,6 +1,7 @@
 #include "DisplayCommand.hpp"
 #include "../../../Document/Document.hpp"
 #include "../../../Rendering/Render.hpp"
+#include "../../../Common/Controller/ControllerBase.hpp"
 
 namespace CLI
 {
@@ -19,7 +20,7 @@ void DisplayCommand::exec()
     auto document = Application::getDocument();
     auto render = Application::getRenderer();
 
-    render->print( document->getSlideById( *id ), std::cout );
+    render->print( document->getSlideById( *id ), Application::getController()->output() );
 }
 
 } // namespace CLI

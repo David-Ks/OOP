@@ -6,11 +6,18 @@
 
 #include <ostream>
 
+#include <QImage>
+#include <QPainter>
+#include <QPixmap>
+#include <QFile>
+#include <QFileDialog>
+
 class Render
 {
 public:
-    void draw( std::shared_ptr< Slide > );
-    void print( std::shared_ptr< Slide >, std::ostream& stream );
+    void draw( std::shared_ptr< Slide > ) const;
+    QImage createImage( std::shared_ptr< Slide > ) const;
+    void print( std::shared_ptr< Slide >, std::ostream& stream ) const;
 };
 
 #endif // RENDER_HPP

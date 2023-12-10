@@ -1,5 +1,7 @@
 #include "Slide.hpp"
 
+int Slide::IdCounter = 1;
+
 Slide::Slide() : _id( IdCounter++ ) {}
 
 void Slide::addItem( std::shared_ptr< Item > item )
@@ -36,4 +38,13 @@ std::shared_ptr< Item > Slide::getItemById( int id ) const
     throw InvalidItemIdException( "Invalid slide ID." );
 }
 
-int Slide::IdCounter = 1;
+int Slide::getIdByItem( std::shared_ptr< Item > item ) const
+{
+    auto it = std::find( _items.begin(), _items.end(), item );
+    if ( it == _items.end() )
+    {
+        throw InvalidItemException( "Invalid item." );
+    }
+
+    return it->get()->getId();
+}

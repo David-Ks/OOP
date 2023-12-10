@@ -1,4 +1,5 @@
 #include "UndoCommand.hpp"
+#include "../../../Director/Director.hpp"
 
 namespace CLI
 {
@@ -8,6 +9,7 @@ UndoCommand::UndoCommand( const Arguments& args )
 
 void UndoCommand::exec()
 {
+    Application::getDirector()->undo();
 }
 
 } // namespace CLI

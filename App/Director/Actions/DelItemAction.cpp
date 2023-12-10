@@ -12,5 +12,6 @@ void DelItemAction::exec()
 
 void DelItemAction::revert()
 {
-    Application::getDocument()->getSlideById( _slideId )->delItem( deleted );
+    Application::getDocument()->getSlideById( _slideId )->addItem( deleted );
+    _itemId = Application::getDocument()->getSlideById( _slideId )->getIdByItem( deleted );
 }

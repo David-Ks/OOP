@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.0)
 
-project(Parser)
+project(PowerPoint)
 
-# Create a variable to store a list of all source files
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
 file(GLOB SOURCE_FILES "*.cpp" "App/*.cpp" "App/**/*.cpp" "App/**/**/*.cpp" "App/**/**/**/*.cpp" "App/**/**/**/**/*.cpp")
 
 set(GLOB HEADERS "*.hpp" "App/*.hpp" "App/**/*.hpp" "App/**/**/*.hpp" "App/**/**/**/*.hpp" "App/**/**/**/**/*.hpp")
 
-add_executable(Parser ${SOURCE_FILES} ${HEADERS})
+add_executable(PowerPoint ${SOURCE_FILES} ${HEADERS})
 
-target_include_directories(Parser PRIVATE include)
+target_include_directories(PowerPoint PRIVATE include)
+
+target_link_libraries(PowerPoint PRIVATE Qt5::Widgets)

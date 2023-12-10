@@ -1,35 +1,33 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
-#include "GUI/Controller.hpp"
-#include "CLI/Controller.hpp"
+#include "Common/Exception/Exception.hpp"
+#include "Application_fwd.hpp"
 
 #include <memory>
-
-class Document;
-class Director;
-class Render;
 
 class Application
 {
 public:
-    /**
-     * @brief Get the Controller instance
-     *        The Controller type will only be defined on the first call, this happens in the main.cpp
-     * 
-     * @param ControllerType Optional
-     * @return ControllerBase
-     */
-    static std::shared_ptr< Common::ControllerBase > getController( Common::ControllerType type = Common::ControllerType::CLI );
+    struct ApplicationNotRunnedException : Common::Exception { using Exception::Exception; };
+    struct InvalidModException : Common::Exception { using Exception::Exception; };
+    
+public:
+    static std::shared_ptr< Common::ControllerBase > getController();
     static std::shared_ptr< Director > getDirector();
     static std::shared_ptr< Document > getDocument();
     static std::shared_ptr< Render > getRenderer();
 
+public:
+    Application( std::istream& input, std::ostream& output );
+    ~Application();
+
+    void run( const std::string& );
+
 private:
-    Application() {}
-    ~Application(); 
-    Application( const Application& );
-    Application& operator=( const Application& );
+    static std::shared_ptr< Common::ControllerBase > _controller;
+    std::istream& _input; 
+    std::ostream& _output;
 };
 
 #endif // APPLICATION_HPP

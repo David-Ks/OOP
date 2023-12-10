@@ -14,7 +14,7 @@ namespace CLI
 
 class Parser
 {
-public:
+private:
     struct InvalidTokenException : Common::Exception { using Exception::Exception; };
     struct EmptyLineException : Common::Exception { using Exception::Exception; };
 
@@ -22,14 +22,11 @@ public:
     using Tokens = std::deque< Token >;
 
 public:
-    Parser();
-
-public:
-    std::unique_ptr< Command > parse( const std::string& line );
+    static std::unique_ptr< Command > parse( std::istream& input );
 
 private:
-    Token getNext( Tokens& );
-    Tokens tokenize( const std::string& );
+    static Token getNext( Tokens& );
+    static Tokens tokenize( const std::string& );
 };
 
 } // namespace CLI

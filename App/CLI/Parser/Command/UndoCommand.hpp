@@ -2,6 +2,7 @@
 #define UNDO_COMMAND_HPP
 
 #include "Command.hpp"
+#include "../../../Application.hpp"
 
 namespace CLI
 {

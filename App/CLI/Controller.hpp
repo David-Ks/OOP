@@ -4,7 +4,6 @@
 #include "../Common/Controller/ControllerBase.hpp"
 #include "Parser/Parser.hpp"
 
-#include <iostream>
 #include <string>
 
 namespace CLI
@@ -13,18 +12,18 @@ namespace CLI
 class Controller : public Common::ControllerBase
 {
 public:
-    Controller();
+    Controller( std::istream& input, std::ostream& output );
 
 public:
-    void exit() override;
     void run() override;
-
-private:
-    std::string input() const;
-    void output( const std::string& text ) const;
+    void exit() override;
+    std::istream& input() override;
+    std::ostream& output() override;
 
 private:
     bool _isExit;
+    std::istream& _input;
+    std::ostream& _output;
 };
 
 } // namespace CLI

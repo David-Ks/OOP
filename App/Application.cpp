@@ -2,28 +2,44 @@
 #include "Document/Document.hpp"
 #include "Director/Director.hpp"
 #include "Rendering/Render.hpp"
+#include "GUI/Controller.hpp"
+#include "CLI/Controller.hpp"
 
+std::shared_ptr< Common::ControllerBase > Application::_controller;
+
+Application::Application( std::istream& input, std::ostream& output )
+    : _input( input )
+    , _output( output )
+{}
 
 Application::~Application() {}
 
-std::shared_ptr< Common::ControllerBase > Application::getController( Common::ControllerType type )
+void Application::run( const std::string& mode )
 {
-    static std::shared_ptr< Common::ControllerBase > controller;
-    if ( ! controller )
+    if ( mode == "CLI" )
     {
-        switch ( type )
-        {
-        case Common::ControllerType::CLI:
-            controller = std::make_shared< CLI::Controller >();
-            break;
-        
-        case Common::ControllerType::GUI:
-            controller = std::make_shared< GUI::Controller >();
-            break;
-        }
+        _controller = std::make_shared< CLI::Controller >( _input, _output );
+    }
+    else if ( mode == "GUI" )
+    {
+        _controller = std::make_shared< GUI::Controller >();
+    }
+    else
+    {
+        throw InvalidModException( "Invalid Mod." );
     }
 
-    return controller;
+    _controller->run();
+}
+
+std::shared_ptr< Common::ControllerBase > Application::getController()
+{
+    if ( ! _controller )
+    {
+        ApplicationNotRunnedException( "Need to run application." );
+    }
+
+    return _controller;
 }
 
 std::shared_ptr< Document > Application::getDocument()

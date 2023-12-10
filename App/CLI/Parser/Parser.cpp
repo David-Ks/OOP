@@ -3,10 +3,10 @@
 namespace CLI
 {
 
-Parser::Parser() {}
-
-std::unique_ptr< Command > Parser::parse( const std::string& line )
+std::unique_ptr< Command > Parser::parse( std::istream& input )
 {
+    std::string line;
+    std::getline( input, line );
     if ( line.empty() ) 
         throw EmptyLineException( "Parser Error: Empty line." );
 
