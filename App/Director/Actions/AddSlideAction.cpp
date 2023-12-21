@@ -5,10 +5,10 @@ AddSlideAction::AddSlideAction( std::shared_ptr< Slide > slide )
 
 void AddSlideAction::exec()
 {
-    Application::getDocument()->addSlide( _slide );
+    Application::getInstance()->getDocument()->addSlide( _slide );
 }
 
-void AddSlideAction::revert()
+void AddSlideAction::reset()
 {
-    Application::getDocument()->delSlide( _slide );
+    Application::getInstance()->getDocument()->delSlide( _slide );
 }

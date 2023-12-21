@@ -10,6 +10,8 @@ namespace CLI
 
 class NoneCommand : public Command
 {
+    struct InvalidCommandException : Utils::Exception { using Exception::Exception; };
+
 public:
     NoneCommand( const Arguments& args );
     void exec() override;

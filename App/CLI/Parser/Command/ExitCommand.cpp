@@ -9,7 +9,7 @@ ExitCommand::ExitCommand( const Arguments& args )
 
 void ExitCommand::exec()
 {
-    Application::getController()->exit();
+    Application::getInstance()->getController()->exit();
 }
 
 } // namespace CLI

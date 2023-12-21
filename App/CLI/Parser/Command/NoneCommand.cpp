@@ -8,7 +8,7 @@ NoneCommand::NoneCommand( const Arguments& args )
 
 void NoneCommand::exec()
 {
-    throw std::runtime_error( "Error: Invalid Command." );
+    throw InvalidCommandException( "Invalid Command." );
 }
 
 } // namespace CLI

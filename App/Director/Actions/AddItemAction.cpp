@@ -6,10 +6,10 @@ AddItemAction::AddItemAction( std::shared_ptr< Item > item, int slideId )
 
 void AddItemAction::exec()
 {
-    Application::getDocument()->getSlideById( _slideId )->addItem( _item );
+    Application::getInstance()->getDocument()->getSlideById( _slideId )->addItem( _item );
 }
 
-void AddItemAction::revert()
+void AddItemAction::reset()
 {
-    Application::getDocument()->getSlideById( _slideId )->delItem( _item );
+    Application::getInstance()->getDocument()->getSlideById( _slideId )->delItem( _item );
 }

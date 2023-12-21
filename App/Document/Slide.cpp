@@ -1,7 +1,5 @@
 #include "Slide.hpp"
 
-int Slide::IdCounter = 1;
-
 Slide::Slide() : _id( IdCounter++ ) {}
 
 void Slide::addItem( std::shared_ptr< Item > item )
@@ -38,13 +36,39 @@ std::shared_ptr< Item > Slide::getItemById( int id ) const
     throw InvalidItemIdException( "Invalid slide ID." );
 }
 
-int Slide::getIdByItem( std::shared_ptr< Item > item ) const
+QJsonObject Slide::toJson() const
 {
-    auto it = std::find( _items.begin(), _items.end(), item );
-    if ( it == _items.end() )
+    QJsonObject json;
+
+    json[ "id" ] = _id;
+
+    int index = 0;
+    for ( const auto& item : _items ) 
     {
-        throw InvalidItemException( "Invalid item." );
+        json[ QString( "item_%1" ).arg( index++ ) ] = item->toJson();
     }
 
-    return it->get()->getId();
+    return json;
 }
+
+void Slide::fromJson( const QJsonObject& jsonObject )
+{
+    _items.clear();
+
+    if ( jsonObject.contains( "id" ) && jsonObject[ "id" ].isDouble() ) 
+    {
+        _id = jsonObject["id"].toInt();
+    }
+
+    for ( const auto& key : jsonObject.keys() ) 
+    {
+        if ( key.startsWith( "item_" ) )
+        {
+            auto newItem = std::make_shared< Item >();
+            newItem->fromJson( jsonObject[ key ].toObject() );
+            _items.push_back( newItem );
+        }
+    }
+}
+
+int Slide::IdCounter = 1;

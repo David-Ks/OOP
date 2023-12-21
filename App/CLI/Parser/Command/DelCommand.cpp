@@ -1,6 +1,7 @@
 #include "DelCommand.hpp"
-#include "../../../Director/Director.hpp"
+#include "../../../Application.hpp"
 #include "../../../Director/Actions/DelItemAction.hpp"
+#include "../../../Director/Actions/DelSlideAction.hpp"
 
 namespace CLI
 {
@@ -10,19 +11,21 @@ DelCommand::DelCommand( const Arguments& args )
 
 void DelCommand::exec()
 {
-    auto slideId = std::get_if< int >( &_args.at( "-slideId" ) );
-    auto itemId = std::get_if< int >( &_args.at( "-itemId" ) );
+    auto slideId = std::get_if< int >( & Utils::get( _args, std::string{ "-slideId" } ) );
+    auto itemId = std::get_if< int >( & Utils::get( _args, std::string{ "-itemId" } ) );
     if ( ! slideId )
     {
         throw InvalidArgumentException( "The -type argument is undefined." );
     }
     if ( ! itemId )
     {
-        // Application::getDirector()->exec( std::make_shared< DelSlideAction >( *slideId ) );
+        auto slide = Application::getInstance()->getDocument()->getSlideById( *slideId );
+        Application::getInstance()->getDirector()->exec( std::make_shared< DelSlideAction >( slide ) );
     }
     else
     {
-        Application::getDirector()->exec( std::make_shared< DelItemAction >( *itemId, *slideId ) );
+        auto item = Application::getInstance()->getDocument()->getSlideById( *slideId )->getItemById( *itemId );
+        Application::getInstance()->getDirector()->exec( std::make_shared< DelItemAction >( item, *slideId ) );
     }
     
 }

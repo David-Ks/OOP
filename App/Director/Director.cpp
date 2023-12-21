@@ -17,7 +17,7 @@ void Director::undo()
     {
         auto action = undoStack.top();
         undoStack.pop();
-        action->revert();
+        action->reset();
         redoStack.push( action );
     }
 }

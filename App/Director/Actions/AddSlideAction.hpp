@@ -12,7 +12,7 @@ public:
     
 public:
     void exec() override;
-    void revert() override;
+    void reset() override;
 
 private:
     std::shared_ptr< Slide > _slide;

@@ -1,33 +1,45 @@
 #ifndef APPLICATION_HPP
 #define APPLICATION_HPP
 
-#include "Common/Exception/Exception.hpp"
-#include "Application_fwd.hpp"
+#include "Document/Document.hpp"
+#include "Director/Director.hpp"
+#include "Rendering/Render.hpp"
+
+namespace CLI
+{
+    class Controller;
+}
 
 #include <memory>
+#include <cassert>
+#include <iostream>
 
 class Application
 {
-public:
-    struct ApplicationNotRunnedException : Common::Exception { using Exception::Exception; };
-    struct InvalidModException : Common::Exception { using Exception::Exception; };
-    
-public:
-    static std::shared_ptr< Common::ControllerBase > getController();
-    static std::shared_ptr< Director > getDirector();
-    static std::shared_ptr< Document > getDocument();
-    static std::shared_ptr< Render > getRenderer();
+    struct InvalidModeException : Utils::Exception { using Exception::Exception; };
+    struct UndefinedModeException : Utils::Exception { using Exception::Exception; };
 
 public:
-    Application( std::istream& input, std::ostream& output );
-    ~Application();
+    static Application* getInstance();
+    void initialize( std::istream&, std::ostream& );
+    void run();
 
-    void run( const std::string& );
+    std::shared_ptr< CLI::Controller > getController();
+    Director* getDirector();
+    Document* getDocument();
+    Render* getRender();
 
 private:
-    static std::shared_ptr< Common::ControllerBase > _controller;
-    std::istream& _input; 
-    std::ostream& _output;
+    Application() {}
+    ~Application(); 
+    Application( const Application& );
+    Application& operator=( const Application& );
+
+private:
+    std::shared_ptr< CLI::Controller > _controller;
+    Document _document;
+    Director _director;
+    Render _render;
 };
 
 #endif // APPLICATION_HPP

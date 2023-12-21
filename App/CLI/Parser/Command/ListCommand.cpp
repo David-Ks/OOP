@@ -1,6 +1,5 @@
 #include "ListCommand.hpp"
-#include "../../../Application.hpp"
-#include "../../../Document/Document.hpp"
+#include "../../../Utils/helpers.hpp"
 #include "../../Controller.hpp"
 
 namespace CLI
@@ -11,13 +10,13 @@ ListCommand::ListCommand( const Arguments& args )
 
 void ListCommand::exec()
 {
-    std::ostream& output = Application::getController()->output();
-    output << "Slides:" << std::endl;
-
-    for ( const auto& slide : Application::getDocument()->getSlides() )
+    std::ostream& os = Application::getInstance()->getController()->getOStream();
+    os << "Slide ids: ";
+    for ( const auto& slide : Application::getInstance()->getDocument()->getSlides() )
     {
-        output << slide->getId() << std::endl;
+        os << slide->getId() << " ";
     }
+    os << std::endl;
 }
 
 } // namespace CLI

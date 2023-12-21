@@ -1,5 +1,5 @@
 #include "RedoCommand.hpp"
-#include "../../../Director/Director.hpp"
+#include "../../../Application.hpp"
 
 namespace CLI
 {
@@ -9,7 +9,7 @@ RedoCommand::RedoCommand( const Arguments& args )
 
 void RedoCommand::exec()
 {
-    Application::getDirector()->redo();
+    Application::getInstance()->getDirector()->redo();
 }
 
 } // namespace CLI

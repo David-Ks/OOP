@@ -2,19 +2,20 @@
 #define SLIDE_HPP
 
 #include "Item.hpp"
-#include "../Common/Exception/Exception.hpp"
+#include "../Utils/Exception.hpp"
 
 #include <vector>
 #include <memory>
 #include <algorithm>
 
-class Slide
+class Slide : public Serializable
 {
+    static int IdCounter;
+
 public:
     using Items = std::vector< std::shared_ptr< Item > >;
 
-    struct InvalidItemIdException : Common::Exception { using Exception::Exception; };
-    struct InvalidItemException : Common::Exception { using Exception::Exception; };
+    struct InvalidItemIdException : Utils::Exception { using Exception::Exception; };
 
 public:
     Slide();
@@ -22,16 +23,17 @@ public:
 public:
     void addItem( std::shared_ptr< Item > );
     void delItem( std::shared_ptr< Item > );
-    int getIdByItem( std::shared_ptr< Item > ) const;
     std::shared_ptr< Item > getItemById( int ) const;
     const Items& getItems() const;
     int getId() const;
 
-private:
-    static int IdCounter;
+public:
+    QJsonObject toJson() const override;
+    void fromJson( const QJsonObject& jsonObject ) override;
 
+private:
     Items _items;
-    const int _id;
+    int _id;
 };
 
 #endif // SLIDE_HPP

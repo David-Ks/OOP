@@ -2,7 +2,6 @@
 #define REDO_COMMAND_HPP
 
 #include "Command.hpp"
-#include "../../../Application.hpp"
 
 namespace CLI
 {

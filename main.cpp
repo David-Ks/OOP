@@ -4,17 +4,16 @@
 
 int main( int argc, char* argv[] )
 {
-    if ( argc > 1 )
-    {
-        const std::string mode = argv[ 1 ];
+    auto app = Application::getInstance();
 
-        Application app( std::cin, std::cout );
-        app.run( mode );
-    }
-    else
+    try
     {
-        std::cerr << "No mode specified. Please use 'CLI' or 'GUI'." << std::endl;
-        return 1;
+        app->initialize( std::cin, std::cout );
+        app->run();
+    }
+    catch( const Utils::Exception& e )
+    {
+        std::cerr << e.what() << '\n';
     }
 
     return 0;

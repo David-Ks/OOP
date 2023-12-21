@@ -29,13 +29,30 @@ void Document::delSlide( std::shared_ptr< Slide > slide )
     _slides.erase( std::remove_if( _slides.begin(), _slides.end(), removeCondition ), _slides.end() );
 }
 
-int Document::getIdBySlide( std::shared_ptr< Slide > slide ) const
+QJsonObject Document::toJson() const
 {
-    auto it = std::find( _slides.begin(), _slides.end(), slide );
-    if ( it == _slides.end() )
+    QJsonObject json;
+
+    int index = 0;
+    for ( const auto& slide : _slides ) 
     {
-        throw InvalidSlideException( "Invalid slide." );
+        json[ QString( "slide_%1" ).arg( index++ ) ] = slide->toJson();
     }
 
-    return it->get()->getId();
+    return json;
+}
+
+void Document::fromJson( const QJsonObject& jsonObject )
+{
+    _slides.clear();
+
+    for ( const auto& key : jsonObject.keys() ) 
+    {
+        if ( key.startsWith( "slide_" ) )
+        {
+            auto newSlide = std::make_shared< Slide >();
+            newSlide->fromJson( jsonObject[ key ].toObject() );
+            _slides.push_back( newSlide );
+        }
+    }
 }

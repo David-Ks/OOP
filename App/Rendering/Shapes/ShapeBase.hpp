@@ -3,22 +3,26 @@
 
 #include "IShape.hpp"
 #include "ITextualDsiplayable.hpp"
+#include "IVisualDisplayable.hpp"
 
 #include <string>
 
-class ShapeBase : public IShape, ITextualDisplayable
+class ShapeBase : public IShape, public ITextualDisplayable, public IVisualDisplayable
 {
+    using BoundRect = std::tuple< int, int, int, int >;
+
 public:
-    std::unique_ptr< IShape > copy() const override;
     void print( std::ostream& ) const override;
 
 public:
     void setName( const std::string& name );
     void setColor( const std::string& color );
+    void setBound( const BoundRect& bound );
 
 protected:
     std::string _name;
     std::string _color;
+    BoundRect _bound;
 };
 
 #endif // I_SHAPE_BASE_HPP

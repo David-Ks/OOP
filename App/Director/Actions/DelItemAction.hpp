@@ -10,16 +10,15 @@
 class DelItemAction : public Action
 {
 public:
-    DelItemAction( int itemId, int slideId );
+    DelItemAction( std::shared_ptr< Item > item, int slideId );
     
 public:
     void exec() override;
-    void revert() override;
+    void reset() override;
 
 private:
-    int _itemId;
     int _slideId;
-    std::shared_ptr< Item > deleted;
+    std::shared_ptr< Item > _item;
 };
 
 #endif // DEl_ITEM_ACTION_HPP

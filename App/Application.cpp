@@ -1,76 +1,41 @@
 #include "Application.hpp"
-#include "Document/Document.hpp"
-#include "Director/Director.hpp"
-#include "Rendering/Render.hpp"
-#include "GUI/Controller.hpp"
 #include "CLI/Controller.hpp"
-
-std::shared_ptr< Common::ControllerBase > Application::_controller;
-
-Application::Application( std::istream& input, std::ostream& output )
-    : _input( input )
-    , _output( output )
-{}
 
 Application::~Application() {}
 
-void Application::run( const std::string& mode )
+void Application::initialize( std::istream& is, std::ostream& os )
 {
-    if ( mode == "CLI" )
-    {
-        _controller = std::make_shared< CLI::Controller >( _input, _output );
-    }
-    else if ( mode == "GUI" )
-    {
-        _controller = std::make_shared< GUI::Controller >();
-    }
-    else
-    {
-        throw InvalidModException( "Invalid Mod." );
-    }
-
-    _controller->run();
+    _controller = std::make_shared< CLI::Controller >( is, os );
 }
 
-std::shared_ptr< Common::ControllerBase > Application::getController()
+Application* Application::getInstance()
 {
-    if ( ! _controller )
-    {
-        ApplicationNotRunnedException( "Need to run application." );
-    }
+    static Application app;
+    return &app;
+}
 
+Document* Application::getDocument()
+{
+    return &_document;
+}
+
+Director* Application::getDirector()
+{
+    return &_director;
+}
+
+std::shared_ptr< CLI::Controller > Application::getController()
+{
+    assert( _controller != nullptr && "Uninitialized application" );
     return _controller;
 }
 
-std::shared_ptr< Document > Application::getDocument()
+void Application::run()
 {
-    static std::shared_ptr< Document > document;
-    if ( ! document )
-    {
-        document = std::make_shared< Document >();
-    }
-
-    return document;
+    getController()->run();
 }
 
-std::shared_ptr< Director > Application::getDirector()
+Render* Application::getRender()
 {
-    static std::shared_ptr< Director > director;
-    if ( ! director )
-    {
-        director = std::make_shared< Director >();
-    }
-
-    return director;
-}
-
-std::shared_ptr< Render > Application::getRenderer()
-{
-    static std::shared_ptr< Render > renderer;
-    if ( ! renderer )
-    {
-        renderer = std::make_shared< Render >();
-    }
-    
-    return renderer;
+    return &_render;
 }

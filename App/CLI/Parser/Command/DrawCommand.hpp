@@ -3,6 +3,7 @@
 
 #include "Command.hpp"
 #include "../../../Application.hpp"
+#include "../../../Utils/helpers.hpp"
 
 namespace CLI
 {

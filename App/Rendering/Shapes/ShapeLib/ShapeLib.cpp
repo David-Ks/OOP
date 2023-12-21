@@ -1,23 +1,28 @@
 #include "ShapeLib.hpp"
+#include "../ShapeRectangle.hpp"
 
-std::shared_ptr< ShapeLib > ShapeLib::instance()
+ShapeLib::ShapeLib()
 {
-    static std::shared_ptr< ShapeLib > _instance;
-    if ( ! _instance )
-    {
-        _instance = std::make_shared< ShapeLib >();
-    }
-
-    return _instance;
+    _shapes[ "rect" ] = std::make_shared< Rectangle >();
 }
 
-std::shared_ptr< ShapeBase > ShapeLib::get( const std::string& shape ) 
+ShapeLib::~ShapeLib() {}
+
+
+ShapeLib* ShapeLib::instance()
 {
-    auto it = _shapes.find( shape );
-    if ( it != _shapes.end() ) 
+    static ShapeLib instance;
+    return &instance;
+}
+
+std::shared_ptr< ShapeBase > ShapeLib::get( std::shared_ptr< Item > item ) 
+{
+    auto it = _shapes.find( item->getShape() );
+    if ( it == _shapes.end() ) 
     {
-        return it->second;
+        throw InvalidShapeException( "Invalid Shape name." + item->getShape() );
     }
 
-    throw InvalidShapeException( "Invalid Shape name." );
+    return std::dynamic_pointer_cast< ShapeBase >( it->second->clone( item ) );
+
 }

@@ -2,7 +2,8 @@
 #define SHAPE_LIBRARY_HPP
 
 #include "../ShapeBase.hpp"
-#include "../../../Common/Exception/Exception.hpp"
+#include "../../../Utils/Exception.hpp"
+#include "../../../Document/Item.hpp"
 
 #include <memory>
 #include <unordered_map>
@@ -10,12 +11,19 @@
 class ShapeLib 
 {
 public:
-    struct InvalidShapeException : Common::Exception { using Exception::Exception; };
+    struct InvalidShapeException : Utils::Exception { using Exception::Exception; };
 
 public:
-    static std::shared_ptr< ShapeLib > instance();
+    static ShapeLib* instance();
 
-    std::shared_ptr< ShapeBase > get( const std::string& shape );
+    std::shared_ptr< ShapeBase > get( std::shared_ptr< Item > item );
+
+private:
+    ShapeLib();
+    ~ShapeLib();
+    ShapeLib(const ShapeLib&) = delete;
+    ShapeLib& operator=(const ShapeLib&) = delete;
+    friend std::shared_ptr<ShapeLib> std::make_shared<ShapeLib>();
 
 private:
     std::unordered_map< std::string, std::shared_ptr< ShapeBase > > _shapes;

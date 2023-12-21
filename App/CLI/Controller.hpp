@@ -1,29 +1,31 @@
 #ifndef CLI_CONTROLLER_HPP
 #define CLI_CONTROLLER_HPP
 
-#include "../Common/Controller/ControllerBase.hpp"
 #include "Parser/Parser.hpp"
 
+#include <iostream>
 #include <string>
 
 namespace CLI
 {
 
-class Controller : public Common::ControllerBase
+class Controller
 {
 public:
-    Controller( std::istream& input, std::ostream& output );
+    Controller( std::istream& is, std::ostream& os );
 
 public:
-    void run() override;
-    void exit() override;
-    std::istream& input() override;
-    std::ostream& output() override;
+    void exit();
+    void run();
+
+public:
+    std::istream& getIStream();
+    std::ostream& getOStream();
 
 private:
     bool _isExit;
-    std::istream& _input;
-    std::ostream& _output;
+    std::istream& _is;
+    std::ostream& _os;
 };
 
 } // namespace CLI

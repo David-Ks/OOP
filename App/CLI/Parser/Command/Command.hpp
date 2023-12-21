@@ -1,7 +1,7 @@
 #ifndef COMMAND_HPP
 #define COMMAND_HPP
 
-#include "../../../Common/Exception/Exception.hpp"
+#include "../../../Utils/Exception.hpp"
 
 #include <variant>
 #include <string>
@@ -16,8 +16,8 @@ public:
     using Value = std::variant< int, std::string >;
     using Arguments = std::map< std::string, Value >;
 
-    struct InvalidArgumentException : Common::Exception { using Exception::Exception; };
-    struct InvalidArgumentValueException : Common::Exception { using Exception::Exception; };
+    struct InvalidArgumentException : Utils::Exception { using Exception::Exception; };
+    struct InvalidArgumentValueException : Utils::Exception { using Exception::Exception; };
 
 public:
     Command( const Arguments& args ) : _args( args ) {}

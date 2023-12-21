@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Common
+namespace Utils
 {
 
 class Exception : std::exception
@@ -23,7 +23,7 @@ private:
     std::string _what;
 };
 
-} // namespace Common
+} // namespace Utils
 
 
 #endif // EXCEPTION_HPP

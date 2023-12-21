@@ -1,17 +1,15 @@
 #include "DelItemAction.hpp"
 
-DelItemAction::DelItemAction( int itemId, int slideId )
-    : _itemId( itemId )
+DelItemAction::DelItemAction( std::shared_ptr< Item > item, int slideId )
+    : _item( item )
     , _slideId( slideId ) {}
 
 void DelItemAction::exec()
 {
-    deleted = Application::getDocument()->getSlideById( _slideId )->getItemById( _itemId );
-    Application::getDocument()->getSlideById( _slideId )->delItem( deleted );
+    Application::getInstance()->getDocument()->getSlideById( _slideId )->delItem( _item );
 }
 
-void DelItemAction::revert()
+void DelItemAction::reset()
 {
-    Application::getDocument()->getSlideById( _slideId )->addItem( deleted );
-    _itemId = Application::getDocument()->getSlideById( _slideId )->getIdByItem( deleted );
+    Application::getInstance()->getDocument()->getSlideById( _slideId )->addItem( _item );
 }

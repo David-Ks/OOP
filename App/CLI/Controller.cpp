@@ -3,40 +3,46 @@
 namespace CLI
 {
 
-Controller::Controller( std::istream& input, std::ostream& output )
-    : _isExit( false )
-    , _input( input )
-    , _output( output ) {}
+Controller::Controller( std::istream& is, std::ostream& os )
+    : _isExit( false ) 
+    , _is( is )
+    , _os( os ) {}
 
 void Controller::run()
 {
+    Parser cmdParser;
+
     while ( ! _isExit )
     {
         try
         {
-            auto cmd = Parser::parse( input() );
+            auto cmd = cmdParser.parse( _is );
             cmd->exec();
         }
-        catch( const Common::Exception& exc )
+        catch( const Utils::Exception& err )
         {
-            output() << ( exc.what() );
+            _os << err.what() << '\n';
+        }
+        catch( const std::out_of_range& err )
+        {
+            _os << err.what() << '\n';
         }
     }
-}
-
-std::istream& Controller::input()
-{
-    return _input;
-}
-
-std::ostream& Controller::output()
-{
-    return _output;
 }
 
 void Controller::exit()
 {
     _isExit = true;
+}
+
+std::istream& Controller::getIStream()
+{
+    return _is;
+}
+
+std::ostream& Controller::getOStream()
+{
+    return _os;
 }
 
 } // namespace CLI

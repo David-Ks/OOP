@@ -29,6 +29,18 @@ std::unique_ptr< Command > CommandFactory::create( const std::string& name, cons
     {
         return std::make_unique< DisplayCommand >( args );
     }
+    else if ( name == "draw" )
+    {
+        return std::make_unique< DrawCommand >( args );
+    }
+    else if ( name == "load" )
+    {
+        return std::make_unique< LoadCommand >( args );
+    }
+    else if ( name == "save" )
+    {
+        return std::make_unique< SaveCommand >( args );
+    }
 
     return std::make_unique< NoneCommand >( args );
 }
