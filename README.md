@@ -1,4 +1,4 @@
-# Console Application for and Document Rendering
+# Console Application for Geometrical Shapes and Document Rendering
 
 This console application allows users to create geometrical shapes, render documents, and save them in formats such as .json and .png. It supports a command-line interface with various commands for shape creation, attribute setting, manipulation, and undo/redo functionalities.
 
